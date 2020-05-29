@@ -1,0 +1,150 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<h2>This is what we found about {{domain}}</h2>
+
+<!-- First row -->
+<div class='row'>
+    <!-- First column of first row -->
+    <div class='col-sm'>
+        <div class='card'>
+            {% if similar_web_data != 'Cannot connect to SimilarWeb' %}
+            <img src='{{similar_web_data["LargeScreenshot"]}}' class='card-img-top' alt='{{domain}}'>
+            {%endif %}
+            <div class='card-body'>
+                <h5 class='card-title'>{{website_data['Title']}}</h5>
+                <h6 class='card-subtitle mb-2 text-muted'>{{similar_web_data['Category']}}</h6>
+                <p class='card-text'>{{website_data['Description']}}</p>
+                <a href='https://{{domain}}' class='btn btn-primary'>Visit {{domain}}</a>
+            </div>
+        </div>
+    </div>
+    <!-- First column end of first row -->
+
+    <!-- Second column of first row -->
+    <div class='col-sm'>
+        <div class='card'>
+            <div class='card-body'>
+                {% if website_data['Contact pages']|length > 1 %}
+                <h5 class='card-title'>{{website_data['Contact pages']|length}} contact pages</h5>
+                {% endif %}
+                {% if website_data['Contact pages']|length == 1 %}
+                <h5 class='card-title'>Contact page</h5>
+                {% endif %}
+                <ul class='list-group list-group-flush'>
+                    {% if website_data['Contact pages'][0] == "Contact us pages not found" %}
+                    <li class='list-group-item'>Contact us pages not found</li>
+                    {% else %}
+                    {% for contact in website_data['Contact pages'][:3] %}
+                    <li class='list-group-item'><a href="{{contact}}" target="_blank">{{contact}}</a></li>
+                    {% endfor %}
+                    {% if website_data['Contact pages']|length > 3 %}
+                    <div class="collapse" id="collapseContact">
+                    {% for contact in website_data['Contact pages'][3:] %}
+                        <li class='list-group-item'><a href="{{contact}}" target="_blank">{{contact}}</a></li>
+                    {% endfor %}
+                    </div>
+                    <li class='list-group-item'><a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseContact" aria-expanded="false" aria-controls="collapseContact">
+                        Toggle other results
+                    </a></li>
+                    {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class='card'>
+            <div class='card-body'>
+                {% if website_data['Emails']|length > 1 %}
+                <h5 class='card-title'>{{website_data['Emails']|length}} contact emails</h5>
+                {%endif %}
+                {% if website_data['Emails']|length == 1 %}
+                <h5 class='card-title'>Contact email</h5>
+                {%endif %}
+                <ul class='list-group list-group-flush'>
+                    {% if website_data['Emails'][0] == "Emails not found" %}
+                    <li class='list-group-item'>Emails not found</li>
+                    {% else %}
+                    {% for email in website_data['Emails'][:3] %}
+                    <li class='list-group-item'><a href="mailto:{{email}}">{{email}}</a></li>
+                    {% endfor %}
+                    {% if website_data['Emails']|length > 3 %}
+                    <div class="collapse" id="collapseEmail">
+                    {% for email in website_data['Emails'][3:] %}
+                        <li class='list-group-item'><a href="mailto:{{email}}">{{email}}</a></li>
+                    {% endfor %}
+                    </div>
+                    <li class='list-group-item'><a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseEmail" aria-expanded="false" aria-controls="collapseEmail">
+                        Toggle other results
+                    </a></li>
+                    {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Second column end of first row-->
+
+    <!-- Third column of first row -->
+    <div class='col-sm'>
+        <div class='card'>
+            <div class='card-body'>
+                <h5 class='card-title'>Global Alexa rank</h5>
+                <h6 class='card-subtitle mb-2 text-muted'></h6>
+                <p class='card-text'>{{alexa_data['Global rank']}}</p>
+            </div>
+        </div>
+    </div>
+    <!-- Third column end of first row -->
+</div>
+<!-- First row end -->
+
+{% if similar_web_chart['chart'] is not none %}
+<!-- Second row -->
+<div class='row'>
+    <!-- First column of second row -->
+    <div class='col-sm'>
+        <div class='card'>
+            <div class='card-body'>
+                <h5 class='card-title'>Traffic Sources</h5>
+                <h6 class='card-subtitle mb-2 text-muted'>Based on Similar Web</h6>
+                <div id={{similar_web_chart['chart']['renderTo']|safe}} class='chart' style='height: 500px'>
+            </div>
+        </div>
+    </div>
+    <div class='card'>
+        <div class='card-body'>
+            <h5 class='card-title'>Traffic volume</h5>
+            <h6 class='card-subtitle mb-2 text-muted'>Based on Similar Web</h6>
+            <div id={{similar_web_chart['chart_2']['renderTo']|safe}} class='chart' style='height: 500px'>
+        </div>
+    </div>
+</div>
+</div>
+<!-- First column end of second row -->
+</div>
+<!-- Second row end -->
+
+<!-- SimilarWeb chart data -->
+<script>
+    var chart_id = {{ similar_web_chart['chart']['renderTo']|safe }}
+    var series = {{ similar_web_chart['series']|safe }}
+    var title = {{ similar_web_chart['title']|safe }}
+    var xAxis = {{ similar_web_chart['xAxis']|safe }}
+    var yAxis = {{ similar_web_chart['yAxis']|safe }}
+    var chart = {{ similar_web_chart['chart']|safe }}
+
+    var chart_id_2 = {{ similar_web_chart['chart_2']['renderTo']|safe }}
+    var series_2 = {{ similar_web_chart['series_2']|safe }}
+    var title_2 = {{ similar_web_chart['title_2']|safe }}
+    var xAxis_2 = {{ similar_web_chart['xAxis_2']|safe }}
+    var yAxis_2 = {{ similar_web_chart['yAxis_2']|safe }}
+    var chart_2 = {{ similar_web_chart['chart_2']|safe }}
+
+
+</script>
+<script src='https://code.highcharts.com/highcharts.js'></script>
+<script src='../static/graph.js'></script>
+{%endif %}
+<!-- SimilarWeb chart data end -->
+
+{% endblock %}

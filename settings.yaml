@@ -1,0 +1,14 @@
+contact_page_pattern:
+    - contact
+    - contato
+    - kontakt
+    - dmca
+    - iletisim
+    - feedback
+    - support
+    - contat
+    - disclaimer
+    - advertise
+    - \/ad$
+    - about
+    - privacy

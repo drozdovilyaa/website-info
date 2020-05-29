@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta name='description' content='This is a demo app to collect some data about provided domain names.'>
+    <title>Get data on domain</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./static/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./static/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./static/img/favicon-16x16.png">
+    <link rel="manifest" href="./static/img/site.webmanifest">
+    <link rel="mask-icon" href="./static/img/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Bootstrap core CSS -->
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link href='../static/css/form.css' rel='stylesheet'>
+    <script src='../static/button.js'></script>
+</head>
+
+<body>
+<div class='jumbotron'>
+    <div class='container'>
+        <h1 class='display-3'>Get data about website</h1>
+        <p>This is a demo app to collect some data about provided domain names. We try to find contact pages, emails and other data about the query.</p>
+        <div class='input-form form-domain'>
+            <form action='' method='POST' onsubmit="load_button()">
+                <input class='form-control' title='Domain name (Ex.: google.com)' placeholder='Enter domain name' type='text' name='domain' pattern='^([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$' required>
+                <button id="loading_btn" class='btn btn-lg btn-primary btn-block padding_cust' type='submit'>Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class='container'>
+    <div class='result'>
+        {%block content%}
+        {%endblock%}
+    </div>
+</div>
+<footer class='footer'>
+    <div class='container'>
+        <span class='text-muted'>This project is created for educational purpose. It displays data provided by <a href='https://alexa.com/'>Alexa.com</a> and <a href='https://similarweb.com'>SimilarWeb.com</a>, but it is not associated with the services. For the source code and more comments visit the github page.</span>
+    </div>
+</footer>
+</body>
+</html>
