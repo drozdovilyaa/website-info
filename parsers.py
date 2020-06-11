@@ -3,7 +3,6 @@ from requests.exceptions import Timeout
 from bs4 import BeautifulSoup as bs
 import re
 import yaml
-import json
 
 # Settings are stored in settings.yaml, for example 'about us' URL patterns
 f = open('settings.yaml', mode='r', encoding='utf-8')
@@ -20,8 +19,7 @@ def similar_web(website_query):
     session = requests.Session()
     request = session.get(similar_web_url, headers=headers, timeout=10)
     if request.status_code == 200:
-        soup = bs(request.content, 'lxml')
-        similar_web_data = json.loads(str(soup.text))
+        similar_web_data = request.json()
         return similar_web_data
     else:
         error = 'Cannot connect to SimilarWeb'
@@ -167,7 +165,8 @@ def website_info(website_query):
         else:
             website_data['Error'] = str(request.status_code) + 'request code'
 
-    except requests.exceptions.ConnectionError:
+    except:
         website_data['Error'] = 'Connection refused'
 
     return website_data
+
